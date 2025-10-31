@@ -1,10 +1,10 @@
 "use client"
 
+import { BookOpen, Calendar, CreditCard, Lock, Mail, User } from "lucide-react"
 import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
-import { authAPI } from "../api/api"
+import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
-import { BookOpen, Mail, Lock, User, Calendar, CreditCard } from "lucide-react"
+import { authAPI } from "../api/api"
 
 export const Cadastro = () => {
   const [formData, setFormData] = useState({
@@ -69,7 +69,7 @@ export const Cadastro = () => {
         email: formData.email,
         senha: formData.senha,
         cpf: formData.cpf.replace(/\D/g, ""),
-        dataNascimento: formData.dataNascimento,
+        data_nascimento: formData.dataNascimento,
       })
 
       toast.success("Cadastro realizado com sucesso! Faça login para continuar.")
