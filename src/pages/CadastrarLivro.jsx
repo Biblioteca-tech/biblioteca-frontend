@@ -1,10 +1,10 @@
 "use client"
 
+import { ArrowLeft, BookOpen, ImageIcon, Upload } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { livrosAPI } from "../api/api"
 import { toast } from "react-toastify"
-import { BookOpen, Upload, ArrowLeft, ImageIcon } from "lucide-react"
+import { livrosAPI } from "../api/api"
 
 export const CadastrarLivro = () => {
   const navigate = useNavigate()
@@ -92,14 +92,19 @@ export const CadastrarLivro = () => {
 
     try {
       const data = new FormData()
-      data.append("titulo", formData.titulo)
-      data.append("autor", formData.autor)
-      data.append("editora", formData.editora)
-      data.append("ano_publicacao", formData.ano_publicacao)
-      data.append("genero", formData.genero)
-      data.append("sinopse", formData.sinopse)
-      data.append("idioma", formData.idioma)
-      data.append("preco", formData.preco)
+      
+      const livro = {
+        titulo: formData.titulo,
+        autor: formData.autor,
+        editora: formData.editora,
+        ano_publicacao: formData.ano_publicacao,
+        genero: formData.genero,
+        sinopse: formData.sinopse,
+        idioma: formData.idioma,
+        preco: formData.preco
+      }
+
+      data.append("livro", new Blob([JSON.stringify(livro)], { type: "application/json" }))
       data.append("pdf", pdfFile)
       data.append("capa", capaFile)
 

@@ -78,7 +78,7 @@ export const livrosAPI = {
     api.post("/livros/cadastrar", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     }),
-  atualizar: (id, data) => api.put(`/livros/atualizar/${id}`, data),
+  atualizar: (id, data) => api.put(`/livros/atualizarLivro/${id}`, data),
   toggleStatus: (id) => api.patch(`/livros/toggle-status/${id}`),
   getFuncionarioLivros: () => api.get("/funcionario/livros"),
   deletar: (id) => api.delete(`/livros/deletar/${id}`),

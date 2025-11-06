@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom"
-import { livrosAPI } from "../api/api"
-import { useCart } from "../context/CartContext"
-import { useAuth } from "../auth/AuthProvider"
+import { ArrowLeft, BookOpen, Building2, Calendar, Clock, Globe, ShoppingCart } from "lucide-react"
+import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
-import { BookOpen, ShoppingCart, Clock, ArrowLeft, Calendar, Globe, Building2 } from "lucide-react"
+import { livrosAPI } from "../api/api"
+import { useAuth } from "../auth/AuthProvider"
+import { useCart } from "../context/CartContext"
 
 export const LivroDetalhes = () => {
   const { id } = useParams()
@@ -93,15 +93,23 @@ export const LivroDetalhes = () => {
           {/* Book Cover */}
           <div className="lg:col-span-1">
             <div className="bg-card border border-border rounded-xl overflow-hidden sticky top-8">
-              <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <BookOpen className="h-24 w-24 text-primary/40" />
+              <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center overflow-hidden">
+                {livro.capaPath ? (
+                  <img
+                    src={`http://localhost:8080/livros/capa/${livro.capaPath}`}
+                    alt={`Capa de ${livro.titulo}`}
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <BookOpen className="h-24 w-24 text-primary/40" />
+                )}
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs px-3 py-1.5 bg-primary/10 text-primary rounded-full font-medium">
                     {livro.genero}
                   </span>
-                  <span className="text-2xl font-bold text-primary">R$ {livro.preco.toFixed(2)}</span>
+                  <span className="text-2xl font-bold text-primary">R$ {venda.preco?.toFixed(2) ?? "0.00"}</span>
                 </div>
                 <div className="flex flex-col gap-3">
                   <button
@@ -142,7 +150,7 @@ export const LivroDetalhes = () => {
                   <Calendar className="h-5 w-5 text-primary" />
                   <div>
                     <p className="text-sm text-muted-foreground">Ano de Publicação</p>
-                    <p className="font-medium">{livro.anoPublicacao || "Não informado"}</p>
+                    <p className="font-medium">{livro.ano_publicacao || "Não informado"}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-4 bg-muted/30 rounded-lg">

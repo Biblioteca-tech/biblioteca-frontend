@@ -80,7 +80,7 @@ export const FuncionarioLivroDetalhes = () => {
       console.error("Erro ao carregar PDF:", error)
     }
   }
-  
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
     setFormData((prev) => ({
@@ -91,7 +91,10 @@ export const FuncionarioLivroDetalhes = () => {
 
   const handleSave = async () => {
     try {
-      await livrosAPI.atualizar(id, formData)
+      await livrosAPI.atualizar(id, {
+        ...formData,
+        ano_publicacao: formData.anoPublicacao, // 👈 converte para o formato do backend
+      })
       toast.success("Livro atualizado com sucesso!")
       setEditMode(false)
       fetchLivro()
@@ -138,11 +141,10 @@ export const FuncionarioLivroDetalhes = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={handleToggleStatus}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-                livro.ativo
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${livro.ativo
                   ? "bg-muted text-muted-foreground hover:bg-muted/80"
                   : "bg-green-500/10 text-green-500 hover:bg-green-500/20"
-              }`}
+                }`}
             >
               <Power className="h-4 w-4" />
               {livro.ativo ? "Desativar" : "Ativar"}
@@ -181,19 +183,19 @@ export const FuncionarioLivroDetalhes = () => {
           <div className="lg:col-span-1">
             <div className="bg-card border border-border rounded-xl p-6 sticky top-8">
               {/* Book Cover */}
-                <div className="aspect-[3/4] overflow-hidden">
-                  {livro.capaPath ? (
-                    <img
-                      src={`http://localhost:8080/livros/capa/${livro.capaPath}`}
-                      alt={livro.titulo}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                      <BookOpen className="h-16 w-16 text-primary/40" />
-                    </div>
-                  )}
-                </div>
+              <div className="aspect-[3/4] overflow-hidden">
+                {livro.capaPath ? (
+                  <img
+                    src={`http://localhost:8080/livros/capa/${livro.capaPath}`}
+                    alt={livro.titulo}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                    <BookOpen className="h-16 w-16 text-primary/40" />
+                  </div>
+                )}
+              </div>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Status</span>
@@ -205,7 +207,7 @@ export const FuncionarioLivroDetalhes = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Preço</span>
-                  <span className="text-lg font-bold text-primary">R$ {livro.preco.toFixed(2)}</span>
+                  <span className="text-lg font-bold text-primary">R$ {livro.preco?.toFixed(2) ?? "0.00"}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Gênero</span>
@@ -270,7 +272,7 @@ export const FuncionarioLivroDetalhes = () => {
                         name="genero"
                         value={formData.genero}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="w-full pl-10 pr-4 py-3 bg-[#1E1E2F] text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4B92DB] appearance-none cursor-pointer"
                       >
                         {generos.map((g) => (
                           <option key={g} value={g}>
@@ -285,7 +287,7 @@ export const FuncionarioLivroDetalhes = () => {
                         name="idioma"
                         value={formData.idioma}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="w-full pl-10 pr-4 py-3 bg-[#1E1E2F] text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4B92DB] appearance-none cursor-pointer"
                       >
                         {idiomas.map((i) => (
                           <option key={i} value={i}>

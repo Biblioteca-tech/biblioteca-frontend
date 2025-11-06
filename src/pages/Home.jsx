@@ -138,11 +138,11 @@ export const Home = () => {
 
           {/* Genre Filter */}
           <div className="relative md:w-64">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#4B92DB]" />
             <select
               value={selectedGenero}
               onChange={(e) => setSelectedGenero(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring appearance-none cursor-pointer"
+              className="w-full pl-10 pr-4 py-3 bg-[#1E1E2F] text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4B92DB] appearance-none cursor-pointer"
             >
               <option value="all">Todos os gêneros</option>
               {generos
