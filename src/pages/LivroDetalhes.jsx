@@ -109,7 +109,7 @@ export const LivroDetalhes = () => {
                   <span className="text-xs px-3 py-1.5 bg-primary/10 text-primary rounded-full font-medium">
                     {livro.genero}
                   </span>
-                  <span className="text-2xl font-bold text-primary">R$ {venda.preco?.toFixed(2) ?? "0.00"}</span>
+                  <span className="text-2xl font-bold text-primary">R$ {livro.preco?.toFixed(2) ?? "0.00"}</span>
                 </div>
                 <div className="flex flex-col gap-3">
                   <button

@@ -223,7 +223,7 @@ export const CadastrarLivro = () => {
                   name="genero"
                   value={formData.genero}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full px-4 py-3 bg-white text-black border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
                   required
                 >
                   <option value="">Selecione um gênero</option>
@@ -245,7 +245,7 @@ export const CadastrarLivro = () => {
                   name="idioma"
                   value={formData.idioma}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full px-4 py-3 bg-white text-black border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
                   required
                 >
                   <option value="">Selecione um idioma</option>

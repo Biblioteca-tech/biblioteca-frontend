@@ -51,7 +51,10 @@ export const FuncionarioLivroDetalhes = () => {
   const fetchLivro = async () => {
     try {
       const response = await livrosAPI.getById(id)
-      setLivro(response.data)
+      setLivro({
+      ...response.data,
+      anoPublicacao: response.data.ano_publicacao,
+    })
       setFormData({
         titulo: response.data.titulo || "",
         autor: response.data.autor || "",
@@ -261,7 +264,7 @@ export const FuncionarioLivroDetalhes = () => {
                       <input
                         type="number"
                         name="anoPublicacao"
-                        value={formData.anoPublicacao}
+                        value={formData.ano_publicacao}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
                       />
