@@ -80,7 +80,7 @@ export const livrosAPI = {
     }),
   atualizar: (id, data) => api.put(`/livros/atualizarLivro/${id}`, data),
   toggleStatus: (id) => api.patch(`/livros/toggle-status/${id}`),
-  getFuncionarioLivros: () => api.get("/funcionario/livros"),
+  getFuncionarioLivros: () => api.get("/livros"),
   deletar: (id) => api.delete(`/livros/deletar/${id}`),
   getPdf: (id) => {
   const token = localStorage.getItem("token")
