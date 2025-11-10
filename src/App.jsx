@@ -12,6 +12,7 @@ import { AdminDashboard } from "./pages/AdminDashboard"
 import { CadastrarLivro } from "./pages/CadastrarLivro"
 import { Cadastro } from "./pages/Cadastro"
 import { Carrinho } from "./pages/Carrinho"
+import { ExecutiveDashboard } from "./pages/ExecutiveDashboard"
 import { FuncionarioLivroDetalhes } from "./pages/FuncionarioLivroDetalhes"
 import { FuncionarioLivros } from "./pages/FuncionarioLivros"
 import { Home } from "./pages/Home"
@@ -137,6 +138,7 @@ function App() {
                 element={
                   <PrivateRoute rolesAllowed={["ROLE_ADMINISTRADOR"]}>
                     <AdminDashboard />
+                    <ExecutiveDashboard />
                   </PrivateRoute>
                 }
               />
