@@ -23,6 +23,7 @@ import { MeusLivros } from "./pages/MeusLivros"
 import { MeusPedidos } from "./pages/MeusPedidos"
 import { NotFound } from "./pages/NotFound"
 import { Perfil } from "./pages/Perfil"
+import { EditarFuncionario } from "./pages/admin/EditarFuncionario"
 
 function App() {
   return (
@@ -132,6 +133,14 @@ function App() {
                 }
               />
 
+              <Route
+                path="/admin/editar-funcionario/:id"
+                element={
+                  <PrivateRoute rolesAllowed={["ROLE_ADMINISTRADOR"]}>
+                    <EditarFuncionario />
+                  </PrivateRoute>
+                }
+              />
               {/* Admin routes */}
               <Route
                 path="/admin/dashboard"

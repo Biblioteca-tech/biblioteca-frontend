@@ -1,6 +1,6 @@
 "use client"
 
-import { Calendar, MapPin, Phone, Search, Trash2, UserPlus, Users } from "lucide-react"
+import { Calendar, MapPin, Phone, Search, Trash2, UserPlus, Users, Pencil } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -161,6 +161,16 @@ export const GerenciarFuncionarios = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
+                    {/* Botão de editar */}
+                    <button
+                      onClick={() => navigate(`/admin/editar-funcionario/${funcionario.id}`)}
+                      className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors"
+                      title="Editar"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </button>
+
+                    {/* Botão de excluir */}
                     <button
                       onClick={() => handleDelete(funcionario.id, funcionario.nome)}
                       className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"

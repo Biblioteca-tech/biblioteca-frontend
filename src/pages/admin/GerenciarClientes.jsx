@@ -1,6 +1,6 @@
 "use client"
 
-import { Calendar, CreditCard, Search, Trash2, Users } from "lucide-react"
+import { Ban, Calendar, CreditCard, Search, Trash2, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { adminAPI } from "../../api/api"
@@ -55,6 +55,27 @@ export const GerenciarClientes = () => {
       }
     }
   }
+
+const handleDeactivate = async (cliente) => {
+  // Se o cliente está ATIVO → vira INATIVO
+  // Se está INATIVO → vira ATIVO
+  const novoStatus = cliente.statusCliente === "ATIVO" ? "INATIVO" : "ATIVO"
+
+  const verboAcao = novoStatus === "INATIVO" ? "desativar" : "reativar"
+  const acaoToast = novoStatus === "INATIVO" ? "desativado" : "reativado"
+
+  if (window.confirm(`Deseja ${verboAcao} o cliente ${cliente.nome}?`)) {
+    try {
+      await adminAPI.alterarStatusCliente(cliente.id, novoStatus)
+      toast.info(`Cliente ${cliente.nome} foi ${acaoToast}.`)
+      fetchClientes()
+    } catch (error) {
+      toast.error("Erro ao alterar status do cliente")
+    }
+  }
+}
+
+
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A"
@@ -127,7 +148,9 @@ export const GerenciarClientes = () => {
             {filteredClientes.map((cliente) => (
               <div
                 key={cliente.id}
-                className="bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-shadow"
+                className={`bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-shadow ${
+                  !cliente.ativo ? "opacity-50" : ""
+                }`}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -139,13 +162,22 @@ export const GerenciarClientes = () => {
                       <p className="text-sm text-muted-foreground">{cliente.email}</p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => handleDelete(cliente.id, cliente.nome)}
-                    className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
-                    title="Excluir"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleDeactivate(cliente)}
+                      className="p-2 text-yellow-500 hover:bg-yellow-100 rounded-lg transition-colors"
+                      title="Desativar"
+                    >
+                      <Ban className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(cliente.id, cliente.nome)}
+                      className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+                      title="Excluir"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="space-y-2 text-sm">
