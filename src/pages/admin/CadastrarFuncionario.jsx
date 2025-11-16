@@ -17,6 +17,7 @@ export const CadastrarFuncionario = () => {
     dataAdmissao: "",
     numeroTelefone: "",
     endereco: "",
+    genero: "",
   })
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -84,6 +85,7 @@ export const CadastrarFuncionario = () => {
         dataAdmissao: formData.dataAdmissao,
         numeroTelefone: formData.numeroTelefone.replace(/\D/g, ""),
         endereco: formData.endereco,
+        genero: formData.genero,
       })
 
       toast.success("Funcionário cadastrado com sucesso!")
@@ -256,6 +258,19 @@ export const CadastrarFuncionario = () => {
                       required
                     />
                   </div>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm mb-1">Gênero</label>
+                  <select
+                    name="genero"
+                    value={formData.genero}
+                    onChange={handleChange}
+                    className="w-full  px-4 py-3 bg-white text-black border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="MASCULINO">Masculino</option>
+                    <option value="FEMININO">Feminino</option>
+                  </select>
                 </div>
               </div>
             </div>

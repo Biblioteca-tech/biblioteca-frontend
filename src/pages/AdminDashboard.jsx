@@ -4,9 +4,10 @@ import { BookOpen, Calendar, DollarSign, TrendingUp, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
-import { vendaAPI } from "../api/api"
+import { vendaAPI, clienteAPI  } from "../api/api"
 
 export const AdminDashboard = () => {
+  const [totalClientes, setTotalClientes] = useState(0)
   const [relatorio, setRelatorio] = useState([])
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState({
@@ -18,7 +19,17 @@ export const AdminDashboard = () => {
 
   useEffect(() => {
     fetchRelatorio()
+    fetchClientes()
   }, [])
+
+  const fetchClientes = async () => {
+  try {
+    const response = await clienteAPI.getClientes()
+    setTotalClientes(response.data.length)
+  } catch (error) {
+    toast.error("Erro ao carregar clientes")
+  }
+}
 
   const fetchRelatorio = async () => {
     try {
@@ -168,7 +179,7 @@ export const AdminDashboard = () => {
               </div>
             </div>
             <p className="text-sm text-muted-foreground mb-1">Clientes Ativos</p>
-            <p className="text-3xl font-bold text-purple-500">{stats.clientesAtivos}</p>
+            <p className="text-3xl font-bold text-purple-500">{totalClientes}</p>
           </div>
         </div>
 

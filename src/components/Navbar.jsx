@@ -109,7 +109,14 @@ export const Navbar = () => {
                 <div className="flex items-center gap-3 pl-3 border-l border-border">
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4 text-muted-foreground" />
-                    {isCliente() ? (
+                    {isAdmin() ? (
+                      <button
+                        onClick={() => navigate("/admin/perfil")}
+                        className="text-sm text-foreground hover:text-primary transition-colors"
+                      >
+                        {user.email}
+                      </button>
+                    ) : isCliente() ? (
                       <button
                         onClick={() => navigate("/perfil")}
                         className="text-sm text-foreground hover:text-primary transition-colors"
@@ -119,13 +126,17 @@ export const Navbar = () => {
                     ) : (
                       <span className="text-sm text-foreground">{user.email}</span>
                     )}
+
+
                     {isAdmin() && (
                       <span className="px-2 py-0.5 text-xs bg-primary/20 text-primary rounded-full">Admin</span>
                     )}
+
                     {isFuncionario() && !isAdmin() && (
                       <span className="px-2 py-0.5 text-xs bg-accent/20 text-accent rounded-full">Funcionário</span>
                     )}
                   </div>
+
                   <button
                     onClick={handleLogout}
                     className="p-2 text-muted-foreground hover:text-destructive transition-colors"

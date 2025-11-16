@@ -31,8 +31,6 @@ export const Perfil = () => {
   try {
     const response = await clienteAPI.getPerfil()
     const cliente = response.data
-
-    // Converte a data para o formato aceito pelo input
     const dataFormatada = cliente.data_nascimento
       ? new Date(cliente.data_nascimento).toISOString().split("T")[0]
       : ""

@@ -3,7 +3,6 @@ import { toast } from "react-toastify"
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080"
 
-// Create axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -11,7 +10,6 @@ const api = axios.create({
   },
 })
 
-// Request interceptor - inject JWT token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token")
@@ -25,7 +23,6 @@ api.interceptors.request.use(
   },
 )
 
-// Response interceptor - handle errors globally
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -59,7 +56,6 @@ api.interceptors.response.use(
 
 export default api
 
-// API endpoints
 export const authAPI = {
   cadastro: (data) => api.post("/auth/cadastro", data),
   login: (data) => api.post("/auth/login", data),
@@ -68,6 +64,7 @@ export const authAPI = {
 export const clienteAPI = {
   getPerfil: () => api.get("/cliente/perfil"),
   atualizarPerfil: (data) => api.put("/cliente/atualizar", data),
+  getClientes: () => api.get("/cliente/ativos"),
 }
 
 export const livrosAPI = {
@@ -117,8 +114,9 @@ export const aluguelAPI = {
 }
 
 
-// Admin API endpoints for managing employees and clients
 export const adminAPI = {
+  atualizarPerfil: (data) => api.put("/adm/perfil", data),
+  getPerfil: () => api.get("/adm/perfil"),
   cadastrarFuncionario: (data) => api.post("/auth/cadastrar-funcionario", data),
   getFuncionarios: () => api.get("/adm/buscar-funcionario"),
   deletarFuncionario: (id) => api.delete(`/adm/deletar/${id}`),
@@ -126,7 +124,7 @@ export const adminAPI = {
   atualizarFuncionario: (id, data) => api.put(`/adm/atualizarDados/${id}`, data),
   getFuncionarioById: (id) => api.get(`/adm/funcionario/${id}`),
 
-  // Client management
+  // Cliente
   getClientes: () => api.get("/adm/cliente"),
   deletarCliente: (id) => api.delete(`/adm/cliente/deletar/${id}`),
 }

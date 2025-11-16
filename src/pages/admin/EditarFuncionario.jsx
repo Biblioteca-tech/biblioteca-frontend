@@ -13,10 +13,12 @@ export const EditarFuncionario = () => {
     const [formData, setFormData] = useState({
         nome: "",
         email: "",
-        dataNascimento: "",
+        data_nascimento: "",
         dataAdmissao: "",
         numeroTelefone: "",
         endereco: "",
+        senha: "",
+        genero: "",
     })
 
     const [loading, setLoading] = useState(true)
@@ -33,10 +35,12 @@ export const EditarFuncionario = () => {
             setFormData({
                 nome: func.nome || "",
                 email: func.email || "",
-                data_nascimento: func.dataNascimento || "",
+                data_nascimento: func.data_nascimento || "",
                 dataAdmissao: func.dataAdmissao || "",
                 numeroTelefone: func.numeroTelefone || "",
                 endereco: func.endereco || "",
+                senha: "",
+                genero: func.genero || "",
             })
         } catch (error) {
             toast.error("Erro ao carregar funcionário")
@@ -115,7 +119,7 @@ export const EditarFuncionario = () => {
                             <input
                                 type="date"
                                 name="data_nascimento"
-                                value={formData.dataNascimento}
+                                value={formData.data_nascimento}
                                 onChange={handleChange}
                                 className="w-full p-3 bg-card border border-border rounded-lg"
                             />
@@ -144,6 +148,19 @@ export const EditarFuncionario = () => {
                             placeholder="(XX) XXXXX-XXXX"
                         />
                     </div>
+                    <div>
+                        <label className="block text-sm mb-1">Gênero</label>
+                        <select
+                            name="genero"
+                            value={formData.genero}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 bg-white text-black border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                        >
+                            <option value="">Selecione...</option>
+                            <option value="MASCULINO">Masculino</option>
+                            <option value="FEMININO">Feminino</option>
+                        </select>
+                    </div>
 
                     <div>
                         <label className="block text-sm mb-1">Endereço</label>
@@ -153,6 +170,17 @@ export const EditarFuncionario = () => {
                             onChange={handleChange}
                             className="w-full p-3 bg-card border border-border rounded-lg"
                             rows={3}
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm mb-1">Senha (opcional)</label>
+                        <input
+                            type="password"
+                            name="senha"
+                            value={formData.senha}
+                            onChange={handleChange}
+                            className="w-full p-3 bg-card border border-border rounded-lg"
+                            placeholder="Digite uma nova senha"
                         />
                     </div>
 

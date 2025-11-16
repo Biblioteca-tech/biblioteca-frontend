@@ -24,6 +24,7 @@ import { MeusPedidos } from "./pages/MeusPedidos"
 import { NotFound } from "./pages/NotFound"
 import { Perfil } from "./pages/Perfil"
 import { EditarFuncionario } from "./pages/admin/EditarFuncionario"
+import { AdminPerfil } from "./pages/admin/AdminPerfil"
 
 function App() {
   return (
@@ -115,6 +116,11 @@ function App() {
                   </PrivateRoute>
                 }
               />
+              <Route path="/admin/perfil"
+                element={
+                  <AdminPerfil />
+                } />
+
 
               <Route
                 path="/admin/funcionarios"
@@ -159,6 +165,7 @@ function App() {
                   </PrivateRoute>
                 }
               />
+
               <Route
                 path="/livros-detalhes"
                 element={
