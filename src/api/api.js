@@ -100,6 +100,7 @@ export const livrosAPI = {
     })
   },
   getStatusLivros: () => api.get("/livros/status"),
+  
 }
 
 export const vendaAPI = {
@@ -123,6 +124,15 @@ export const adminAPI = {
   alterarStatusCliente: (id, status) => api.put(`/usuarios/alterarStatus/${id}?novoStatus=${status}`),
   atualizarFuncionario: (id, data) => api.put(`/adm/atualizarDados/${id}`, data),
   getFuncionarioById: (id) => api.get(`/adm/funcionario/${id}`),
+  getPdfAdm: (id) => {
+    const token = localStorage.getItem("token")
+    return api.get(`/pdf/${id}`, {
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  },
 
   // Cliente
   getClientes: () => api.get("/adm/cliente"),

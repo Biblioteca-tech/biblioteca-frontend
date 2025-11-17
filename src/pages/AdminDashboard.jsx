@@ -4,7 +4,7 @@ import { BookOpen, Calendar, DollarSign, TrendingUp, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
-import { vendaAPI, clienteAPI  } from "../api/api"
+import { vendaAPI, clienteAPI, adminAPI  } from "../api/api"
 
 export const AdminDashboard = () => {
   const [totalClientes, setTotalClientes] = useState(0)
@@ -24,7 +24,7 @@ export const AdminDashboard = () => {
 
   const fetchClientes = async () => {
   try {
-    const response = await clienteAPI.getClientes()
+    const response = await adminAPI.getClientes()
     setTotalClientes(response.data.length)
   } catch (error) {
     toast.error("Erro ao carregar clientes")
@@ -48,11 +48,10 @@ export const AdminDashboard = () => {
     const totalVendas = vendas.length
     const receitaTotal = vendas.reduce((sum, venda) => sum + venda.preco, 0)
 
-    // Count unique clients
     const clientesUnicos = new Set(vendas.map((v) => v.clienteEmail))
     const clientesAtivos = clientesUnicos.size
 
-    // Count books sold
+
     const livrosVendidos = vendas.reduce((acc, venda) => {
       acc[venda.livroTitulo] = (acc[venda.livroTitulo] || 0) + 1
       return acc

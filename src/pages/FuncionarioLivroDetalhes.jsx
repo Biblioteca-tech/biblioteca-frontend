@@ -4,7 +4,7 @@ import { ArrowLeft, BookOpen, Building2, Calendar, Edit, FileText, Globe, Power,
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
-import { livrosAPI } from "../api/api"
+import { livrosAPI, adminAPI } from "../api/api"
 
 export const FuncionarioLivroDetalhes = () => {
   const { id } = useParams()
@@ -80,7 +80,7 @@ const [previewCapa, setPreviewCapa] = useState(null);
 
   const fetchPdf = async () => {
     try {
-      const response = await livrosAPI.getPdf(id)
+      const response = await adminAPI.getPdfAdm(id)
       const url = URL.createObjectURL(response.data)
       setPdfUrl(url)
     } catch (error) {

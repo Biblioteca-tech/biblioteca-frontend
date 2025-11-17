@@ -11,6 +11,7 @@ export const LivroView = () => {
   const navigate = useNavigate()
   const [pdfUrl, setPdfUrl] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [canDownload, setCanDownload] = useState(false)
 
   useEffect(() => {
     fetchPdf()
@@ -18,19 +19,39 @@ export const LivroView = () => {
 
   const fetchPdf = async () => {
     try {
-      const response = await livrosAPI.getPdf(id)
-      const blob = new Blob([response.data], { type: "application/pdf" })
-      const url = URL.createObjectURL(blob)
-      setPdfUrl(url)
+      const response = await livrosAPI.getPdf(id);
+
+      // Lê header em lowercase
+      const canDownload = response.headers["x-can-download"] === "true";
+      console.log("Can Download Header:", canDownload);
+      console.log("Headers recebidos:", response.headers);
+      console.log("x-can-download:", response.headers["x-can-download"]);
+      setCanDownload(canDownload);
+
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      setPdfUrl(url);
+
     } catch (error) {
-      toast.error("Erro ao carregar o PDF do livro")
-      navigate("/meus-livros")
+      console.error(error);
+      if (error.response?.status === 403) {
+        toast.error("Você não tem acesso a este livro.");
+      } else {
+        toast.error("Erro ao carregar o PDF do livro");
+      }
+      navigate("/meus-livros");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
+
 
   const handleDownload = () => {
+    if (!canDownload) {
+      toast.error("Você só pode baixar este livro se tiver COMPRADO")
+      return
+    }
+
     if (pdfUrl) {
       const link = document.createElement("a")
       link.href = pdfUrl
@@ -53,7 +74,6 @@ export const LivroView = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <div className="bg-card border-b border-border sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -64,25 +84,33 @@ export const LivroView = () => {
               <ArrowLeft className="h-5 w-5" />
               <span>Voltar para Biblioteca</span>
             </button>
+
+            {/* === DOWNLOAD BLOQUEADO POR STATUS === */}
             <button
               onClick={handleDownload}
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              disabled={!canDownload}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors 
+                ${canDownload ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-gray-300 text-gray-600 cursor-not-allowed"}
+              `}
             >
               <Download className="h-4 w-4" />
-              <span>Baixar PDF</span>
+              <span>{canDownload ? "Baixar PDF" : "Download indisponível"}</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* PDF Viewer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {pdfUrl ? (
           <div
             className="bg-card border border-border rounded-xl overflow-hidden"
             style={{ height: "calc(100vh - 200px)" }}
           >
-            <iframe src={pdfUrl} className="w-full h-full" title="PDF Viewer" />
+            <iframe
+              src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+              className="w-full h-full"
+              title="PDF Viewer"
+            />
           </div>
         ) : (
           <div className="text-center py-16">

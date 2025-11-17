@@ -20,6 +20,8 @@ export const MeusPedidos = () => {
         vendaAPI.getRelatorio(),
         aluguelAPI.getHistoricoAluguel(),
       ])
+      console.log(vendasRes.data)
+      console.log(alugueisRes.data)
       setPedidos(vendasRes.data)
       setAlugueis(alugueisRes.data)
     } catch (error) {
@@ -122,7 +124,7 @@ export const MeusPedidos = () => {
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg mb-2">
-                        {aluguel.livro?.titulo ?? "Livro desconhecido"}
+                        {aluguel.livroTitulo ?? "Livro desconhecido"}
                       </h3>
                       <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                         <div className="flex items-center gap-2">

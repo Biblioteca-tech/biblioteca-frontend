@@ -18,6 +18,7 @@ export const MeusLivros = () => {
   const fetchMeusLivros = async () => {
     try {
       const response = await livrosAPI.getMeusLivros()
+      console.log(response.data)
       setLivros(response.data)
     } catch (error) {
       toast.error("Erro ao carregar seus livros")
@@ -35,6 +36,8 @@ export const MeusLivros = () => {
       toast.error(error.response?.data || "Não foi possível remover o livro");
     }
   };
+
+  
 
 const handleLerLivro = (livroId) => {
   navigate(`/livro/${livroId}/ler`)
@@ -107,7 +110,7 @@ return (
                 </div>
 
                 <button
-                  onClick={() => handleLerLivro(livro.id)}
+                  onClick={() => handleLerLivro(livro.livroId)}
                   className="w-full py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
                 >
                   <Eye className="h-4 w-4" />
