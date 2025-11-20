@@ -96,7 +96,7 @@ export const LivroDetalhes = () => {
               <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center overflow-hidden">
                 {livro.capaPath ? (
                   <img
-                    src={`http://localhost:8080/livros/capa/${livro.capaPath}`}
+                    src={`http://44.210.85.172:8080/livros/capa/${livro.capaPath}`}
                     alt={`Capa de ${livro.titulo}`}
                     className="object-cover w-full h-full"
                   />

@@ -53,7 +53,6 @@ const [previewCapa, setPreviewCapa] = useState(null);
   const fetchLivro = async () => {
     try {
       const response = await livrosAPI.getById(id)
-      console.log("Detalhes do livro:", response.data);
       setLivro({
         ...response.data,
         ano_publicacao: response.data.ano_publicacao,
@@ -217,7 +216,7 @@ const [previewCapa, setPreviewCapa] = useState(null);
                   />
                 ) : livro.capaPath ? (
                   <img
-                    src={`http://localhost:8080/livros/capa/${livro.capaPath}`}
+                    src={`http://44.210.85.172:8080/livros/capa/${livro.capaPath}`}
                     alt={livro.titulo}
                     className="w-full h-full object-cover"
                   />
