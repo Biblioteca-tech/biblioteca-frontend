@@ -20,12 +20,7 @@ export const LivroView = () => {
   const fetchPdf = async () => {
     try {
       const response = await livrosAPI.getPdf(id);
-
-      // Lê header em lowercase
       const canDownload = response.headers["x-can-download"] === "true";
-      console.log("Can Download Header:", canDownload);
-      console.log("Headers recebidos:", response.headers);
-      console.log("x-can-download:", response.headers["x-can-download"]);
       setCanDownload(canDownload);
 
       const blob = new Blob([response.data], { type: "application/pdf" });

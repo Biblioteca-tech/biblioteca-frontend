@@ -29,7 +29,6 @@ export const Home = () => {
   const fetchLivros = async () => {
     try {
       const response = await livrosAPI.getAtivos()
-      console.log(response.data)
       setLivros(response.data)
       setFilteredLivros(response.data)
     } catch (error) {

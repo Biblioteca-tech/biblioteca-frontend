@@ -4,7 +4,7 @@ import { BookOpen, Calendar, DollarSign, TrendingUp, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
-import { vendaAPI, clienteAPI, adminAPI  } from "../api/api"
+import { vendaAPI, clienteAPI, adminAPI } from "../api/api"
 
 export const AdminDashboard = () => {
   const [totalClientes, setTotalClientes] = useState(0)
@@ -23,13 +23,13 @@ export const AdminDashboard = () => {
   }, [])
 
   const fetchClientes = async () => {
-  try {
-    const response = await adminAPI.getClientes()
-    setTotalClientes(response.data.length)
-  } catch (error) {
-    toast.error("Erro ao carregar clientes")
+    try {
+      const response = await adminAPI.getClientes()
+      setTotalClientes(response.data.length)
+    } catch (error) {
+      toast.error("Erro ao carregar clientes")
+    }
   }
-}
 
   const fetchRelatorio = async () => {
     try {
@@ -66,7 +66,6 @@ export const AdminDashboard = () => {
     })
   }
 
-  // Prepare data for charts
   const getTopLivros = () => {
     const livrosCount = relatorio.reduce((acc, venda) => {
       acc[venda.livroTitulo] = (acc[venda.livroTitulo] || 0) + 1
@@ -194,7 +193,7 @@ export const AdminDashboard = () => {
                   <XAxis dataKey="titulo" tick={{ fill: "white" }} />
                   <YAxis tick={{ fill: "white" }} />
                   <Tooltip
-                  cursor={{ fill: "hsl(var(--muted))", opacity: 0.15 }}
+                    cursor={{ fill: "hsl(var(--muted))", opacity: 0.15 }}
                     contentStyle={{
                       backgroundColor: "rgba(30, 30, 30, 0.9)", // fundo escuro semi-transparente
                       borderRadius: "8px",
@@ -259,64 +258,64 @@ export const AdminDashboard = () => {
         </div>
 
         {/* Sales by Month */}
-{getVendasPorMes().length > 0 && (
-  <div className="bg-card border border-border rounded-xl p-6 mb-8">
-    <h2 className="text-xl font-bold mb-6">Vendas por Mês</h2>
-    <ResponsiveContainer width="100%" height={320}>
-      <BarChart
-        data={getVendasPorMes()}
-        margin={{ top: 20, right: 30, left: 0, bottom: 10 }}
-      >
-        <defs>
-          <linearGradient id="colorVendas" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#10b981" stopOpacity={0.9} />
-            <stop offset="100%" stopColor="#10b981" stopOpacity={0.2} />
-          </linearGradient>
-        </defs>
+        {getVendasPorMes().length > 0 && (
+          <div className="bg-card border border-border rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold mb-6">Vendas por Mês</h2>
+            <ResponsiveContainer width="100%" height={320}>
+              <BarChart
+                data={getVendasPorMes()}
+                margin={{ top: 20, right: 30, left: 0, bottom: 10 }}
+              >
+                <defs>
+                  <linearGradient id="colorVendas" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.9} />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity={0.2} />
+                  </linearGradient>
+                </defs>
 
-        <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
 
-        <XAxis
-          dataKey="mes"
-          tick={{ fill: "#fff", fontSize: 12, fontWeight: 500 }}
-          axisLine={false}
-        />
-        <YAxis
-          tick={{ fill: "#fff", fontSize: 12, fontWeight: 500 }}
-          axisLine={false}
-          tickFormatter={(v) => `${v}`}
-        />
+                <XAxis
+                  dataKey="mes"
+                  tick={{ fill: "#fff", fontSize: 12, fontWeight: 500 }}
+                  axisLine={false}
+                />
+                <YAxis
+                  tick={{ fill: "#fff", fontSize: 12, fontWeight: 500 }}
+                  axisLine={false}
+                  tickFormatter={(v) => `${v}`}
+                />
 
-        <Tooltip
-          cursor={{ fill: "hsl(var(--muted))", opacity: 0.15 }}
-          contentStyle={{
-            backgroundColor: "hsl(var(--card))",
-            border: "1px solid hsl(var(--border))",
-            borderRadius: "10px",
-            color: "hsl(var(--foreground))",
-            boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
-          }}
-          labelStyle={{ fontWeight: "600", marginBottom: "5px" }}
-          formatter={(value) => [`${value} vendas`, "Quantidade"]}
-        />
+                <Tooltip
+                  cursor={{ fill: "hsl(var(--muted))", opacity: 0.15 }}
+                  contentStyle={{
+                    backgroundColor: "hsl(var(--card))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "10px",
+                    color: "hsl(var(--foreground))",
+                    boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
+                  }}
+                  labelStyle={{ fontWeight: "600", marginBottom: "5px" }}
+                  formatter={(value) => [`${value} vendas`, "Quantidade"]}
+                />
 
-        <Bar
-          dataKey="vendas"
-          fill="url(#colorVendas)"
-          radius={[8, 8, 0, 0]}
-          animationBegin={0}
-          animationDuration={1200}
-          animationEasing="ease-out"
-          isAnimationActive={true}
-        >
-          {getVendasPorMes().map((entry, index) => (
-            <Cell key={`cell-${index}`} cursor="pointer" />
-          ))}
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
-  </div>
-)}
+                <Bar
+                  dataKey="vendas"
+                  fill="url(#colorVendas)"
+                  radius={[8, 8, 0, 0]}
+                  animationBegin={0}
+                  animationDuration={1200}
+                  animationEasing="ease-out"
+                  isAnimationActive={true}
+                >
+                  {getVendasPorMes().map((entry, index) => (
+                    <Cell key={`cell-${index}`} cursor="pointer" />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
 
 
         {/* Recent Sales Table */}

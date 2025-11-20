@@ -154,8 +154,6 @@ export const Cadastro = () => {
                 />
               </div>
             </div>
-
-            {/* 🔥 CAMPO DE GÊNERO */}
             <div>
               <label className="block text-sm font-medium mb-2">Gênero</label>
               <select
@@ -168,7 +166,7 @@ export const Cadastro = () => {
                 <option value="">Selecione...</option>
                 <option value="MASCULINO">Masculino</option>
                 <option value="FEMININO">Feminino</option>
-              
+
               </select>
             </div>
 

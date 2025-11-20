@@ -25,8 +25,6 @@ export const FuncionarioLivros = () => {
   const fetchLivros = async () => {
     try {
       const response = await livrosAPI.getFuncionarioLivros()
-      console.log("API livros:", response.data);
-
       setLivros(response.data)
       setFilteredLivros(response.data)
     } catch (error) {
@@ -130,7 +128,7 @@ export const FuncionarioLivros = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">Livros Ativos</p>
-                <p className="text-3xl font-bold text-green-500">{livros.filter((l) => l.statusLivro === "ATIVO").length}</p>
+                <p className="text-3xl font-bold text-green-500">{livros.filter((l) => l.estadoRegistroLivro === "ATIVO").length}</p>
               </div>
               <BookOpen className="h-10 w-10 text-green-500/20" />
             </div>
@@ -139,7 +137,7 @@ export const FuncionarioLivros = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">Livros Inativos</p>
-                <p className="text-3xl font-bold text-muted-foreground">{livros.filter((l) => !l.statusLivro === "ATIVO").length}</p>
+                <p className="text-3xl font-bold text-muted-foreground">{livros.filter((l) => !l.estadoRegistroLivro === "ATIVO").length}</p>
               </div>
               <BookOpen className="h-10 w-10 text-muted-foreground/20" />
             </div>
@@ -200,7 +198,7 @@ export const FuncionarioLivros = () => {
                         <div className="font-semibold text-primary">R$ {livro.preco.toFixed(2)}</div>
                       </td>
                       <td className="px-6 py-4">
-                        {livro.statusLivro === "ATIVO" ? (
+                        {livro.estadoRegistroLivro === "ATIVO" ? (
                           <span className="text-xs px-2 py-1 bg-green-500/10 text-green-500 rounded-full">Ativo</span>
                         ) : (
                           <span className="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-full">Inativo</span>

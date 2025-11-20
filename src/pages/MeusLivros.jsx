@@ -18,7 +18,6 @@ export const MeusLivros = () => {
   const fetchMeusLivros = async () => {
     try {
       const response = await livrosAPI.getMeusLivros()
-      console.log(response.data)
       setLivros(response.data)
     } catch (error) {
       toast.error("Erro ao carregar seus livros")

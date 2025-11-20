@@ -20,8 +20,6 @@ export const MeusPedidos = () => {
         vendaAPI.getRelatorio(),
         aluguelAPI.getHistoricoAluguel(),
       ])
-      console.log(vendasRes.data)
-      console.log(alugueisRes.data)
       setPedidos(vendasRes.data)
       setAlugueis(alugueisRes.data)
     } catch (error) {

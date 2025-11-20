@@ -27,9 +27,26 @@ export const ExecutiveDashboard = () => {
   const [livrosPorGeneroCliente, setLivrosPorGeneroCliente] = useState([])
   const [livrosPorIdade, setLivrosPorIdade] = useState([])
 
+
+  const fetchIdiomas = async () => {
+        try {
+          const resp = await vendaAPI.getRelatorioIdiomas(); // usa seu client certinho
+          const dados = resp.data;
+
+          const lista = Object.entries(dados).map(([name, value]) => ({
+            name,
+            value,
+          }));
+          setIdiomasMaisBuscados(lista);
+        } catch (e) {
+          console.log("Erro ao carregar idiomas", e);
+        }
+      };
+
   useEffect(() => {
-    carregarDados()
-  }, [])
+    carregarDados();
+    fetchIdiomas();
+  }, []);
 
   function agruparLivrosPorGeneroCliente(vendas) {
     const mapa = {}
@@ -112,10 +129,7 @@ export const ExecutiveDashboard = () => {
 
       const vendasPorMes = agruparPorMes(vendas)
       const livrosGenero = agruparPorGenero(vendas)
-      const idiomasMock = [
-        { name: "Português", value: 45 },
-        { name: "Inglês", value: 30 },
-      ]
+      
 
       setDados({
         funcionariosAtivos,
@@ -132,7 +146,6 @@ export const ExecutiveDashboard = () => {
       setTopAlugueis(topAlugados)
       setVendasPorMes(vendasPorMes)
       setLivrosGenero(livrosGenero)
-      setIdiomasMaisBuscados(idiomasMock)
       setLivrosPorGeneroCliente(livrosGeneroCliente)
       setLivrosPorIdade(livrosIdade)
     } catch (e) {

@@ -1,7 +1,7 @@
 import axios from "axios"
 import { toast } from "react-toastify"
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://54.173.157.56:8080"
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080"
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -23,36 +23,43 @@ api.interceptors.request.use(
   },
 )
 
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      const { status, data } = error.response
+      const { status, data } = error.response;
 
-      // Handle 401 - Unauthorized (token expired or invalid)
+      // 401 - Token inválido
       if (status === 401) {
-        localStorage.removeItem("token")
-        localStorage.removeItem("user")
-        toast.error("Sessão expirada. Por favor, faça login novamente.")
-        window.location.href = "/login"
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        toast.error("Sessão expirada. Por favor, faça login novamente.");
+        window.location.href = "/login";
       }
-
-      // Handle 403 - Forbidden (insufficient permissions)
       if (status === 403) {
-        toast.error("Você não tem permissão para acessar este recurso.")
+        toast.error("Você não tem permissão para acessar este recurso.");
+      }
+      if (status === 409) {
+        if (
+          data?.message?.toLowerCase().includes("email") &&
+          data?.message?.toLowerCase().includes("exist")
+        ) {
+          toast.error("Já existe um e-mail cadastrado com esse endereço.");
+          return Promise.reject(error);
+        }
       }
 
-      // Handle other errors
       if (status >= 500) {
-        toast.error("Erro no servidor. Tente novamente mais tarde.")
+        toast.error("Erro no servidor. Tente novamente mais tarde.");
       }
     } else if (error.request) {
-      toast.error("Erro de conexão. Verifique sua internet.")
+      toast.error("Erro de conexão. Verifique sua internet.");
     }
+    return Promise.reject(error);
+  }
+);
 
-    return Promise.reject(error)
-  },
-)
 
 export default api
 
@@ -74,7 +81,9 @@ export const livrosAPI = {
   getById: (id) => api.get(`/livros/${id}`),
   cadastrar: (formData) =>
     api.post("/livros/cadastrar", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
     }),
   atualizar: (id, data) => api.put(`/livros/atualizarLivro/${id}`, data),
   toggleStatus: (id) => api.patch(`/livros/toggle-status/${id}`),
@@ -100,17 +109,18 @@ export const livrosAPI = {
     })
   },
   getStatusLivros: () => api.get("/livros/status"),
-  
+
 }
 
 export const vendaAPI = {
   vender: (clienteId, livroId) => api.post(`/venda/vender?email=${clienteId}&livroId=${livroId}`),
   alugar: (clienteEmail, livroId) => api.post(`/alugueis/alugar?email=${clienteEmail}&livroId=${livroId}`),
   getRelatorio: () => api.get("/venda/relatorio"),
+  getRelatorioIdiomas: () => api.get("/venda/relatorio-idiomas"),
 }
 
 export const aluguelAPI = {
-  getRelatorioAluguel: () => api.get("/venda/relatorio-aluguel"),
+  getRelatorioAluguel: () => api.get("/venda/relatorio"),
   getHistoricoAluguel: () => api.get("/alugueis/historico-aluguel"),
 }
 

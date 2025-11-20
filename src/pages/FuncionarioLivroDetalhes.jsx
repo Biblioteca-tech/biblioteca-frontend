@@ -24,7 +24,7 @@ const [previewCapa, setPreviewCapa] = useState(null);
     sinopse: "",
     idioma: "",
     preco: "",
-    statusLivro: "ATIVO",
+    estadoRegistroLivro: "ATIVO",
   })
 
   const generos = [
@@ -57,7 +57,7 @@ const [previewCapa, setPreviewCapa] = useState(null);
       setLivro({
         ...response.data,
         ano_publicacao: response.data.ano_publicacao,
-        statusLivro: response.data.statusLivro == "ATIVO",
+        estadoRegistroLivro: response.data.estadoRegistroLivro == "ATIVO",
       })
       setFormData({
         titulo: response.data.titulo || "",
@@ -113,7 +113,7 @@ const [previewCapa, setPreviewCapa] = useState(null);
   const handleToggleStatus = async () => {
     try {
       await livrosAPI.toggleStatus(id)
-      toast.success(`Livro ${livro.statusLivro ? "desativado" : "ativado"} com sucesso!`)
+      toast.success(`Livro ${livro.estadoRegistroLivro ? "desativado" : "ativado"} com sucesso!`)
       fetchLivro()
     } catch (error) {
       toast.error("Erro ao alterar status do livro")
@@ -164,13 +164,13 @@ const [previewCapa, setPreviewCapa] = useState(null);
           <div className="flex items-center gap-3">
             <button
               onClick={handleToggleStatus}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${livro.statusLivro
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${livro.estadoRegistroLivro
                 ? "bg-muted text-muted-foreground hover:bg-muted/80"
                 : "bg-green-500/10 text-green-500 hover:bg-green-500/20"
                 }`}
             >
               <Power className="h-4 w-4" />
-              {livro.statusLivro ? "Desativar" : "Ativar"}
+              {livro.estadoRegistroLivro ? "Desativar" : "Ativar"}
             </button>
             {!editMode ? (
               <button
@@ -259,7 +259,7 @@ const [previewCapa, setPreviewCapa] = useState(null);
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Status</span>
-                  {livro.statusLivro ? (
+                  {livro.estadoRegistroLivro ? (
                     <span className="text-xs px-2 py-1 bg-green-500/10 text-green-500 rounded-full">Ativo</span>
                   ) : (
                     <span className="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-full">Inativo</span>
@@ -383,11 +383,11 @@ const [previewCapa, setPreviewCapa] = useState(null);
                       type="checkbox"
                       id="statusLivro"
                       name="statusLivro"
-                      checked={formData.statusLivro == "ATIVO"}
+                      checked={formData.estadoRegistroLivro == "ATIVO"}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          statusLivro: e.target.checked ? "ATIVO" : "INATIVO"
+                          estadoRegistroLivro: e.target.checked ? "ATIVO" : "INATIVO"
                         })
                       }
                       className="w-4 h-4 text-primary bg-background border-border rounded focus:ring-2 focus:ring-ring"

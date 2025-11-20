@@ -62,7 +62,6 @@ export const Perfil = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // Validate password if provided
     if (formData.senha && formData.senha !== formData.confirmarSenha) {
       toast.error("As senhas não coincidem")
       return
@@ -78,7 +77,6 @@ export const Perfil = () => {
         data_nascimento: formData.data_nascimento,
       }
 
-      // Only include password if it was provided
       if (formData.senha) {
         updateData.senha = formData.senha
       }
@@ -86,7 +84,6 @@ export const Perfil = () => {
       await clienteAPI.atualizarPerfil(updateData)
       toast.success("Perfil atualizado com sucesso!")
 
-      // Clear password fields
       setFormData((prev) => ({
         ...prev,
         senha: "",
