@@ -216,7 +216,7 @@ const [previewCapa, setPreviewCapa] = useState(null);
                   />
                 ) : livro.capaPath ? (
                   <img
-                    src={`http://44.210.85.172:8080/livros/capa/${livro.capaPath}`}
+                    src={`https://api.abracos.tech/livros/capa/${livro.capaPath}`}
                     alt={livro.titulo}
                     className="w-full h-full object-cover"
                   />

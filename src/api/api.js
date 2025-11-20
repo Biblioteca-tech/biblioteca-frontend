@@ -1,7 +1,7 @@
 import axios from "axios"
 import { toast } from "react-toastify"
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://44.210.85.172:8080"
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://api.abracos.tech"
 
 const api = axios.create({
   baseURL: API_BASE_URL,
