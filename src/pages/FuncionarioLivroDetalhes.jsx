@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { livrosAPI, adminAPI } from "../api/api"
+import { API_BASE_URL } from "../api/api"
+
 
 export const FuncionarioLivroDetalhes = () => {
   const { id } = useParams()
@@ -216,7 +218,7 @@ const [previewCapa, setPreviewCapa] = useState(null);
                   />
                 ) : livro.capaPath ? (
                   <img
-                    src={`https://api.abracos.tech/livros/capa/${livro.capaPath}`}
+                    src={`${API_BASE_URL}/livros/capa/${livro.capaPath}`}
                     alt={livro.titulo}
                     className="w-full h-full object-cover"
                   />

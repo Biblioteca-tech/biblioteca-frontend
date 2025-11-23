@@ -29,19 +29,19 @@ export const ExecutiveDashboard = () => {
 
 
   const fetchIdiomas = async () => {
-        try {
-          const resp = await vendaAPI.getRelatorioIdiomas(); // usa seu client certinho
-          const dados = resp.data;
+    try {
+      const resp = await vendaAPI.getRelatorioIdiomas(); // usa seu client certinho
+      const dados = resp.data;
 
-          const lista = Object.entries(dados).map(([name, value]) => ({
-            name,
-            value,
-          }));
-          setIdiomasMaisBuscados(lista);
-        } catch (e) {
-          console.log("Erro ao carregar idiomas", e);
-        }
-      };
+      const lista = Object.entries(dados).map(([name, value]) => ({
+        name,
+        value,
+      }));
+      setIdiomasMaisBuscados(lista);
+    } catch (e) {
+      console.log("Erro ao carregar idiomas", e);
+    }
+  };
 
   useEffect(() => {
     carregarDados();
@@ -105,6 +105,10 @@ export const ExecutiveDashboard = () => {
       const statusRes = await livrosAPI.getStatusLivros();
       const { ativos, inativos } = statusRes.data;
 
+      console.log("VENDAS", vendas)
+      console.log("ALUGUEIS", alugueis)
+
+
 
       const faturamentoMes = vendas
         .filter((v) => new Date(v.dataVenda).getMonth() === new Date().getMonth())
@@ -129,7 +133,7 @@ export const ExecutiveDashboard = () => {
 
       const vendasPorMes = agruparPorMes(vendas)
       const livrosGenero = agruparPorGenero(vendas)
-      
+
 
       setDados({
         funcionariosAtivos,

@@ -9,6 +9,8 @@ export const MeusPedidos = () => {
   const [pedidos, setPedidos] = useState([])
   const [alugueis, setAlugueis] = useState([])
   const [loading, setLoading] = useState(true)
+  console.log("pedidos:", pedidos)
+  console.log("alugueis:", alugueis)
 
   useEffect(() => {
     fetchDados()
@@ -76,7 +78,7 @@ export const MeusPedidos = () => {
           ) : (
             <div className="space-y-4">
               {pedidos.map((pedido) => (
-                <div key={pedido.id} className="bg-card border border-border rounded-xl p-6">
+                <div key={pedido.livroId} className="bg-card border border-border rounded-xl p-6">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg mb-2">{pedido.livroTitulo}</h3>
@@ -136,13 +138,12 @@ export const MeusPedidos = () => {
                       </div>
                     </div>
                     <span
-                      className={`px-3 py-1.5 rounded-full text-sm font-medium ${
-                        aluguel.status === "FINALIZADO"
+                      className={`px-3 py-1.5 rounded-full text-sm font-medium ${aluguel.status === "FINALIZADO"
                           ? "bg-green-500/10 text-green-500"
                           : aluguel.status === "ATRASADO"
-                          ? "bg-red-500/10 text-red-500"
-                          : "bg-yellow-500/10 text-yellow-500"
-                      }`}
+                            ? "bg-red-500/10 text-red-500"
+                            : "bg-yellow-500/10 text-yellow-500"
+                        }`}
                     >
                       {aluguel.status}
                     </span>

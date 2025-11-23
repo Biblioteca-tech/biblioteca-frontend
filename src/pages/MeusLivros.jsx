@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { livrosAPI } from "../api/api"
+import { API_BASE_URL } from "../api/api"
 
 export const MeusLivros = () => {
   const [livros, setLivros] = useState([])
@@ -86,7 +87,7 @@ return (
               <div className="aspect-[3/4] overflow-hidden">
                 {livro.capaPath ? (
                   <img
-                    src={`https://api.abracos.tech/livros/capa/${livro.capaPath}`}
+                    src={`${API_BASE_URL}/livros/capa/${livro.capaPath}`}
                     alt={livro.titulo}
                     className="w-full h-full object-cover"
                   />

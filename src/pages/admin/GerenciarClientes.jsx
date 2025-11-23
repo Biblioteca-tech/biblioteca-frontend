@@ -57,7 +57,7 @@ export const GerenciarClientes = () => {
   }
 
   const handleDeactivate = async (cliente) => {
-    const novoStatus = cliente.statusCliente === "ATIVO" ? "INATIVO" : "ATIVO"
+    const novoStatus = cliente.estadoRegistroCliente === "ATIVO" ? "INATIVO" : "ATIVO"
 
     const verboAcao = novoStatus === "INATIVO" ? "desativar" : "reativar"
     const acaoToast = novoStatus === "INATIVO" ? "desativado" : "reativado"

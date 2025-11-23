@@ -1,7 +1,7 @@
 import axios from "axios"
 import { toast } from "react-toastify"
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://api.abracos.tech"
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080"//"https://api.abracos.tech"
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -120,7 +120,7 @@ export const vendaAPI = {
 }
 
 export const aluguelAPI = {
-  getRelatorioAluguel: () => api.get("/venda/relatorio"),
+  getRelatorioAluguel: () => api.get("/alugueis/relatorio-aluguel"),
   getHistoricoAluguel: () => api.get("/alugueis/historico-aluguel"),
 }
 
@@ -131,7 +131,7 @@ export const adminAPI = {
   cadastrarFuncionario: (data) => api.post("/auth/cadastrar-funcionario", data),
   getFuncionarios: () => api.get("/adm/buscar-funcionario"),
   deletarFuncionario: (id) => api.delete(`/adm/deletar/${id}`),
-  alterarStatusCliente: (id, status) => api.put(`/usuarios/alterarStatus/${id}?novoStatus=${status}`),
+  alterarStatusCliente: (id, status) => api.put(`/usuarios/alterarStatus/${id}?novoEstadoRegistro=${status}`),
   atualizarFuncionario: (id, data) => api.put(`/adm/atualizarDados/${id}`, data),
   getFuncionarioById: (id) => api.get(`/adm/funcionario/${id}`),
   getPdfAdm: (id) => {

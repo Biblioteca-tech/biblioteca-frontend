@@ -7,6 +7,7 @@ import { toast } from "react-toastify"
 import { livrosAPI } from "../api/api"
 import { useAuth } from "../auth/AuthProvider"
 import { useCart } from "../context/CartContext"
+import { API_BASE_URL } from "../api/api" 
 
 export const Home = () => {
   const [livros, setLivros] = useState([])
@@ -180,7 +181,7 @@ export const Home = () => {
                 <div className="aspect-[3/4] overflow-hidden">
                   {livro.capaPath ? (
                     <img
-                      src={`https://api.abracos.tech/livros/capa/${livro.capaPath}`}
+                      src={`${API_BASE_URL}/livros/capa/${livro.capaPath}`}
                       alt={livro.titulo}
                       className="w-full h-full object-cover"
                     />
